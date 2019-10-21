@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %}
+404 Page Not Found
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+<head>
+    {% block style %}
+    <style>
+        body {
+            background-image: url("{{ url_for('static',filename='img/404-html.png') }}") !important;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .top h1 {
+            color: black;
+        }
+    </style>
+    {% endblock %}
+</head>
+
+</html>

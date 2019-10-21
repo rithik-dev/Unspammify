@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %}
+Admin Panel
+{% endblock %}
+
+<body>
+    {% block body %}
+    <center>
+        <h2><strong>ADD EVENT</strong></h2>
+    </center>
+    <link rel="stylesheet" type="text/css" href="/static/css/form-style.css">
+    <div class="box">
+        <form method="POST">
+            <div class="inputBox">
+                {{ form.date.label }}
+                {{ form.date }}
+                {{ form.time.label }}
+                {{ form.time }}
+                {{ form.venue.label }}
+                {{ form.venue }}
+                {{ form.heading.label }}
+                {{ form.heading }}
+                {{ form.description.label }}
+                {{ form.description }}
+            </div>
+            <input type="submit" name="" value="SUBMIT">
+        </form>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Admin Panel
+{% endblock %}
+
+<html>
+
+<body>
+    {% block body %}
+    <a href="/events/add"><input type="button" value="ADD NEW EVENT"></a>
+    <br /><br />
+    <h3 style="color:white;">ANNOUNCEMENTS</h3>
+
+    {% for event in events %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"><b>{{event.EventHeading}}</b></h5>
+            <p class="card-text" style="color:black;">{{event.EventDescription}}</p>
+            <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
+            <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
+            <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
+
+            <a href="/events/modify/{{event.ID}}" class="card-link"><input type="button" value="MODIFY"></a>
+            <a href="/events/delete/{{event.ID}}" class="card-link"><input type="button" value="DELETE"></a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+</body>
+
+</html>

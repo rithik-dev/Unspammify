@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+<html>
+
+{% block title %}
+HomePage
+{% endblock %}
+
+<body>
+    {% block body %}
+    <h3 style="color:white;">INTERESTED EVENTS</h3>
+    {% for event in events %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <p class="card-text" style="color:black;"><b>{{event.EventHeading}}</b></p>
+            <p class="card-text" style="color:black;">{{event.EventDescription}}</p>
+            <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
+            <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
+            <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
+            <a href="/events/remove-from-fav/{{event.ID}}" class="card-link">
+                <input type="button" value="Remove From Favourites" style="float:right;">
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+</body>
+
+</html>
