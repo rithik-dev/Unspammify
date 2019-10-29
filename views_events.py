@@ -1,10 +1,22 @@
-from app import (app, db, render_template, request, session, flash, redirect)
+from app import (app, db, render_template, request, session, flash, redirect, sendMail)
 from forms import AddEvent
 from models import EventsModel, UserModel
 from random import randint  # generating random id for events
 from datetime import datetime
 
 URL_PREFIX = '/events'
+
+
+def get_event_description(e):
+    return f"""
+{e.EventHeading}
+
+{e.EventDescription}
+
+Date : {e.EventDate}
+Time : {e.EventTime}
+Venue : {e.EventVenue}
+"""
 
 
 def generate_random_id(length=6):
@@ -76,11 +88,33 @@ def modify_event(event_id):
             }
             form = AddEvent(request.form, **field_values)  # form is same for add and modify
             if request.method == "POST" and form.validate():
-                event.EventDate = datetime.strptime(str(form.date.data), '%Y-%m-%d').strftime('%d/%m/%Y')
-                event.EventTime = str(form.time.data).strip().upper()
-                event.EventVenue = str(form.venue.data).strip().upper()
+
+                new_date = datetime.strptime(str(form.date.data), '%Y-%m-%d').strftime('%d/%m/%Y')
+                new_time = str(form.time.data).strip().upper()
+                new_venue = str(form.venue.data).strip().upper()
                 event.EventHeading = str(form.heading.data).strip()
                 event.EventDescription = str(form.description.data).strip()
+
+                # get all favourite users for <event_id>
+                rs = UserModel.query.all()
+                recipients = []
+                for user in rs:
+                    if event_id in user.InterestedActivities:
+                        recipients.append(user.ID + '@bennett.edu.in')
+
+                if new_date != event.EventDate:
+                    event.EventDate = new_date
+                    msg = "Date Changed for Event : " + event.EventHeading
+                if new_time != event.EventTime:
+                    event.EventTime = new_time
+                    msg = "Time Changed for Event : " + event.EventHeading
+                if new_venue != event.EventVenue:
+                    event.EventVenue = new_venue
+                    msg = "Venue Changed for Event : " + event.EventHeading
+
+                sendMail(msg,
+                         get_event_description(event)
+                         , recipients, 'Email Sent Successfully')
 
                 db.session.commit()
 
@@ -104,10 +138,19 @@ def delete_event(event_id):
 
         # delete event from user's favourite events
         rs = UserModel.query.all()
+        recipients = []
         for user in rs:
             if event_id in user.InterestedActivities:
+                recipients.append(user.ID + '@bennett.edu.in')
                 fav_events = user.InterestedActivities.replace(event_id + ',', '')
                 user.InterestedActivities = fav_events
+
+        sendMail(
+            "Event Cancelled : " + e.EventHeading,
+            get_event_description(e),
+            recipients,
+            "Mail Sent Successfully"
+        )
 
         # commit changes
         db.session.commit()
@@ -115,6 +158,34 @@ def delete_event(event_id):
         flash(f"Event With ID : '{event_id}' Deleted Successfully", 'success')
         print(f"Event With ID : '{event_id}' Deleted Successfully")
         return redirect('/admin')
+    else:
+        flash("Admin Not Logged In", 'danger')
+        print("Admin Not Logged In")
+        return redirect('/login')
+
+
+# send reminder for event
+@app.route(URL_PREFIX + '/send-reminder/<string:event_id>')
+def send_reminder_event(event_id):
+    if 'admin' in session:
+        event = EventsModel.query.filter_by(ID=event_id).first()
+        if event is None:  # if event does not exist
+            flash(f"Event With ID : '{event_id}' Does Not Exist", 'danger')
+            print(f"Event With ID : '{event_id}' Does Not Exist")
+            return redirect('/admin')
+        else:
+            # get all favourite users for <event_id>
+            rs = UserModel.query.all()
+            recipients = []
+            for user in rs:
+                if event_id in user.InterestedActivities:
+                    recipients.append(user.ID + '@bennett.edu.in')
+            print("Sending Emails ...")
+            sendMail("REMINDER : " + event.EventHeading,
+                     get_event_description(event),
+                     recipients,
+                     f'Mail Sent Successfully to {len(recipients)} student(s)')
+            return redirect('/admin')
     else:
         flash("Admin Not Logged In", 'danger')
         print("Admin Not Logged In")

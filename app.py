@@ -3,30 +3,28 @@ from flask import (Flask, request, render_template, session, flash, redirect, ur
 from flask_sqlalchemy import SQLAlchemy  # database
 from passlib.hash import sha256_crypt  # password encryption
 from datetime import timedelta
-# from flask_mail import Mail, Message  # to send email
+from flask_mail import Mail, Message  # to send email
 from forms import (LoginForm, RegisterForm)  # , OTPForm)
-
 
 app = Flask(__name__)
 app.config.from_pyfile('app_config.py')
 db = SQLAlchemy(app)
 
+mail = Mail(app)
 
-# mail = Mail(app)
 
-
-# def sendMail(subject, message, recipients, message_on_true):
-#     try:
-#         with mail.connect() as conn:
-#             msg = Message(recipients=recipients,
-#                           body=message,
-#                           subject=subject)
-#             conn.send(msg)
-#         flash(message_on_true, 'success')
-#         return True
-#     except Exception as e:
-#         flash("Error Sending Email", 'danger')
-#         return False
+def sendMail(subject, message, recipients, message_on_true):
+    try:
+        with mail.connect() as conn:
+            msg = Message(recipients=recipients,
+                          body=message,
+                          subject=subject)
+            conn.send(msg)
+        flash(message_on_true, 'success')
+        return True
+    except Exception as e:
+        flash("Error Sending Email", 'danger')
+        return False
 
 
 # def addAdmin(id, password):
