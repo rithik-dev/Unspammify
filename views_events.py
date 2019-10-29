@@ -7,8 +7,9 @@ from datetime import datetime
 URL_PREFIX = '/events'
 
 
-def get_event_description(e):
+def get_event_description(e, msg=''):
     return f"""
+{msg}
 {e.EventHeading}
 
 {e.EventDescription}
@@ -40,7 +41,6 @@ def display_events():
         flash("Not Logged In", 'danger')
         print("Not Logged In")
         return redirect('/login')
-
 
 # add new event
 @app.route(URL_PREFIX + '/add', methods=['GET', 'POST'])
@@ -92,8 +92,8 @@ def modify_event(event_id):
                 new_date = datetime.strptime(str(form.date.data), '%Y-%m-%d').strftime('%d/%m/%Y')
                 new_time = str(form.time.data).strip().upper()
                 new_venue = str(form.venue.data).strip().upper()
-                event.EventHeading = str(form.heading.data).strip()
-                event.EventDescription = str(form.description.data).strip()
+                new_heading = str(form.heading.data).strip()
+                new_description = str(form.description.data).strip()
 
                 # get all favourite users for <event_id>
                 rs = UserModel.query.all()
@@ -102,24 +102,47 @@ def modify_event(event_id):
                     if event_id in user.InterestedActivities:
                         recipients.append(user.ID + '@bennett.edu.in')
 
+                event_modified = False
+                # list containing titles of all the changes made to the event ... used in subject for mail
+                changes = []
+
                 if new_date != event.EventDate:
                     event.EventDate = new_date
-                    msg = "Date Changed for Event : " + event.EventHeading
+                    event_modified = True
+                    changes.append('Date')
                 if new_time != event.EventTime:
                     event.EventTime = new_time
-                    msg = "Time Changed for Event : " + event.EventHeading
+                    event_modified = True
+                    changes.append('Time')
                 if new_venue != event.EventVenue:
                     event.EventVenue = new_venue
-                    msg = "Venue Changed for Event : " + event.EventHeading
+                    event_modified = True
+                    changes.append('Venue')
+                if new_heading != event.EventHeading:
+                    event.EventHeading = new_heading
+                    event_modified = True
+                    changes.append('Heading')
+                if new_description != event.EventDescription:
+                    event.EventDescription = new_description
+                    event_modified = True
+                    changes.append('Description')
 
-                sendMail(msg,
-                         get_event_description(event)
-                         , recipients, 'Email Sent Successfully')
+                if event_modified:
+                    msg = " ".join([x for x in changes]) + " Changed"
 
-                db.session.commit()
+                    db.session.commit()
 
-                flash(f"Event With ID : '{event_id}' Modified Successfully", 'success')
-                print(f"Event With ID : '{event_id}' Modified Successfully")
+                    sendMail(f"Event Modified : {event.EventHeading}",
+                             get_event_description(event, msg),
+                             recipients,
+                             'Email Sent Successfully')
+
+                    flash(f"Event With ID : '{event_id}' Modified Successfully", 'success')
+                    print(f"Event With ID : '{event_id}' Modified Successfully")
+                else:
+                    flash(f"Event With ID : '{event_id}' Not Modified ! All fields are same", 'warning')
+                    print(f"Event With ID : '{event_id}' Not Modified ! All fields are same")
+
                 return redirect('/admin')
     else:
         flash("Admin Not Logged In", 'danger')

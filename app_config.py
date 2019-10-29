@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 SECRET_KEY = 'n#q#_j5ad&CDha7&gCNfc*pGXAkfhL=*KaHvh=Ehuv+HTqbBH=$2w9p+gf$X@jgW9_5dTaq3pt!f-g#@VPpBDhrYwnSrLcbe=zSzHH'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
 
