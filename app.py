@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 
 
-def sort_events(lst):    # sort events based on date only
+def sort_events(lst):  # sort events based on date only
     new_list = []
 
     while lst:
@@ -40,7 +40,7 @@ app.jinja_env.globals.update(get_session=get_session)
 
 
 def sendMail(subject, message, recipients, message_on_true):
-    if recipients:    # there is atleast one interested user
+    if recipients:  # there is atleast one interested user
         try:
             with mail.connect() as conn:
                 msg = Message(recipients=recipients,
@@ -53,18 +53,9 @@ def sendMail(subject, message, recipients, message_on_true):
             flash("Error Sending Email", 'danger')
             del e
             return False
-    else:      # no user interested
+    else:  # no user interested
         flash("Email Not Sent As No User Was Interested !!", 'warning')
         return False
-
-
-
-# def addAdmin(id, password):
-#     id = id.upper()
-#     u = AdminModel(id,sha256_crypt.hash(password))
-#     db.session.add(u)
-#     db.session.commit()
-#     print(f"Admin Added [ID : '{id}']")
 
 
 @app.before_request
@@ -213,6 +204,16 @@ from models import (UserModel, AdminModel, EventsModel)
 
 if __name__ == '__main__':
     app.run()
+
+
+# def addAdmin(id, password):
+#     id = id.upper()
+#     u = AdminModel(id,sha256_crypt.hash(password))
+#     db.session.add(u)
+#     db.session.commit()
+#     print(f"Admin Added [ID : '{id}']")
+
+
 
 # VERIFY USER EMAIL ID WITH OTP???
 # otp = generate_otp()

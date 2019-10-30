@@ -47,6 +47,7 @@ BU Events
 
                     {% set session = get_session() %}
                     {% if 'user' in session %}
+                    <div class="card-btn-container">
                     <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
                         <button>
                             <i class="fa fa-book"></i>
@@ -58,9 +59,11 @@ BU Events
                             <i class="fa fa-thumbs-up"></i>
                         </button>
                     </a>
+                    </div>
 
                     {% elif 'admin' in session %}
 <!--                    if admin in logged in  ...    -->
+                    <div class="card-btn-container">
                     <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
                         <button>
                             <i class="fa fa-book"></i>
@@ -84,6 +87,7 @@ BU Events
                             <i class="fa fa-bell"></i>
                         </button>
                     </a>
+                    </div>
                     {% endif %}
 
                 </div>

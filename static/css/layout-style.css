@@ -71,6 +71,11 @@ a button{
   font-size:28px;
   padding:11px;
 }
+.card-btn-container{
+position:absolute;
+padding:2px;
+bottom:10px;
+}
 
 input[type="button"]:active{
   box-shadow: 0 1px #666;
@@ -112,4 +117,10 @@ header {
 .dropdown .dropdown-menu a:hover {
   background-color: gold;
   font-weight: bold;
+}
+.user-data-events{
+    color:var(--card-background);
+    position:absolute;
+    bottom:10%;
+    right:5%;
 }

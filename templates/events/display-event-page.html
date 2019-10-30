@@ -9,8 +9,14 @@
   h2,h4,p{
     color:#dedcb0;
   }
+  td{
+  text-align:center;
+  padding:0 10px;
+  }
 </style>
 {% endblock %}
+
+{% set session = get_session() %}
 
 {% block body %}
 <h2><b>{{ event.EventHeading }}</b></h2>
@@ -20,13 +26,18 @@
 <h4>Date : {{ event.EventDate }}</h4>
 <h4>Time : {{ event.EventTime }}</h4>
 <h4>Venue : {{ event.EventVenue }}</h4>
+
+{% if 'admin' in session %}
+<h4>Event ID : {{ event.ID }}</h4>
+{% endif %}
+
 <br/>
 <br/>
 
 <!--<a href="/events/add-to-fav/{{event.ID}}" class="card-link"><input type="button"-->
 <!--                            value="Add To Favourites"></a>-->
 
-{% set session = get_session() %}
+{% if 'user' in session %}
 <a href="/events/add-to-fav/{{event.ID}}" data-toggle="tooltip" title="Add To Favourites">
     <button>
         <i class="fa fa-thumbs-up"></i>
@@ -34,13 +45,49 @@
 </a>
 
 <!-- displaying interested users name here only if admin is logged in  -->
-{% if 'admin' in session %}
+{% elif 'admin' in session %}
+
+<a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
+    <button>
+        <i class="fa fa-book"></i>
+    </button>
+</a>
+
+ <a href="/events/modify/{{event.ID}}" data-toggle="tooltip" title="Modify Event">
+     <button>
+         <i class="fa fa-edit"></i>
+     </button>
+ </a>
+
+<a href="/events/delete/{{event.ID}}" data-toggle="tooltip" title="Delete Event">
+    <button>
+        <i class="fa fa-trash-o"></i>
+    </button>
+</a>
+
+<a href="/events/send-reminder/{{event.ID}}" data-toggle="tooltip" title="Send Reminder">
+    <button>
+        <i class="fa fa-bell"></i>
+    </button>
+</a>
+
+
+<div class="user-data-events">
+
 {% if users_interested %}
-<p>Number of Interested Users : {{ num_interested }} / {{ total_users_registered }}</p>
-{% for user in users_interested %}
-    <p>{{user[0]}}  :  {{user[1]}}</p>
-{% endfor %}
+    <h4><u>Number of Interested Users : <b>{{ num_interested }} / {{ total_users_registered }}</b></u></h4>
+    <br/>
+    <table>
+    {% for user in users_interested %}
+        <tr>
+            <td><h5>{{user[1]}}</h5></td>
+            <td><h5>( {{user[0]}} )</h5></td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endif %}
 {% endif %}
+
+</div>
 
 {% endblock %}

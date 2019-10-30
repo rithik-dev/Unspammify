@@ -9,7 +9,7 @@ URL_PREFIX = '/events'
 
 def get_event_description(e, msg=''):
     return f"""
-{msg}
+###  {msg}  ###
 {e.EventHeading}
 
 {e.EventDescription}
