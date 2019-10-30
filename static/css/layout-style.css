@@ -11,7 +11,7 @@
   font-family: sans-serif;
 }
 body {
-  background: url("/static/img/bg1.jpg");
+  background: url("/static/img/bg.jpg");
   background-size: cover;
 }
 .container .text-main {

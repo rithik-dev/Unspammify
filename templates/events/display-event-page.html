@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ event.EventHeading }}
+{% endblock %}
+
+{% block style %}
+<style>
+  h2,h4,p{
+    color:#dedcb0;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<h2><b>{{ event.EventHeading }}</b></h2>
+<br>
+<p>{{ event.EventDescription }}</p>
+<br>
+<h4>Date : {{ event.EventDate }}</h4>
+<h4>Time : {{ event.EventTime }}</h4>
+<h4>Venue : {{ event.EventVenue }}</h4>
+<br/>
+<br/>
+
+<a href="/events/add-to-fav/{{event.ID}}" class="card-link"><input type="button"
+                            value="Add To Favourites"></a>
+{% endblock %}

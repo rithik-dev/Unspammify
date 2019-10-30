@@ -16,13 +16,18 @@ Admin Panel
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title"><b>{{event.EventHeading}}</b></h5>
-            <p class="card-text" style="color:black;">{{event.EventDescription}}</p>
+            <br/>
+<!--            <p class="card-text" style="color:black;">{{event.EventDescription}}</p>-->
             <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
             <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
             <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
 
+            <a href="/events/{{event.ID}}" class="card-link"><input type="button"
+                            value="Read More"></a>
+            <br/><br/>
             <a href="/events/modify/{{event.ID}}" class="card-link"><input type="button" value="MODIFY"></a>
             <a href="/events/delete/{{event.ID}}" class="card-link"><input type="button" value="DELETE"></a>
+            <br/><br/>
             <a href="/events/send-reminder/{{event.ID}}" class="card-link"><input type="button" value="SEND REMINDER"></a>
         </div>
     </div>

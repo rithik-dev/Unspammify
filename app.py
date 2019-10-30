@@ -13,6 +13,13 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 
 
+def get_session():
+    return session
+
+
+app.jinja_env.globals.update(get_session=get_session)
+
+
 def sendMail(subject, message, recipients, message_on_true):
     try:
         with mail.connect() as conn:
@@ -94,6 +101,7 @@ def login():
                     session.clear()
 
                     session['admin'] = id
+                    session['name'] = rs.ID
                     flash(f"Successfully Logged In Admin '{rs.ID}'", 'success')
                     print(f"Successfully Logged In Admin '{rs.ID}'")
                     return redirect('/admin')
@@ -114,6 +122,7 @@ def login():
                     session.clear()
 
                     session['user'] = id
+                    session['name'] = rs.Name
                     flash(f"Successfully Logged In User : {rs.Name}", 'success')
                     print(f"Successfully Logged In User : {rs.Name}")
                     return redirect('/user/' + id)
@@ -160,18 +169,16 @@ def logout():
         flash(f"Admin '{admin}' Logged Out Successfully", 'success')
         print(f"Admin '{admin}' Logged Out Successfully")
         del admin
-        return redirect('/')
     elif 'user' in session:
         user = session['user']
         session.clear()
         flash(f"User '{user}' Logged Out Successfully", 'success')
         print(f"User '{user}' Logged Out Successfully")
         del user
-        return redirect('/')
     else:
         flash("Not Logged In", 'warning')
         print("Not Logged In")
-        return redirect('/login')
+    return redirect('/login')
 
 
 from views_events import *

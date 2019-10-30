@@ -215,6 +215,23 @@ def send_reminder_event(event_id):
         return redirect('/login')
 
 
+@app.route(URL_PREFIX + '/<string:event_id>')
+def display_event(event_id):
+    if 'user' in session or 'admin' in session:  # logged in
+        e = EventsModel.query.filter_by(ID=event_id).first()
+        if e is None:
+            flash(f"Event  With ID : '{event_id}' Does Not Exist", 'success')
+            print(f"Event  With ID : '{event_id}' Does Not Exist")
+            return redirect(URL_PREFIX)
+        else:
+            return render_template('events/display-event-page.html', event=e)
+    else:
+        flash("Not Logged In", 'danger')
+        print("Not Logged In")
+        return redirect('/login')
+
+
+
 @app.route(URL_PREFIX + '/add-to-fav/<string:event_id>')
 def add_event_to_favourites(event_id):
     if 'user' in session:
