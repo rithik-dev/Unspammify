@@ -23,6 +23,24 @@
 <br/>
 <br/>
 
-<a href="/events/add-to-fav/{{event.ID}}" class="card-link"><input type="button"
-                            value="Add To Favourites"></a>
+<!--<a href="/events/add-to-fav/{{event.ID}}" class="card-link"><input type="button"-->
+<!--                            value="Add To Favourites"></a>-->
+
+{% set session = get_session() %}
+<a href="/events/add-to-fav/{{event.ID}}" data-toggle="tooltip" title="Add To Favourites">
+    <button>
+        <i class="fa fa-thumbs-up"></i>
+    </button>
+</a>
+
+<!-- displaying interested users name here only if admin is logged in  -->
+{% if 'admin' in session %}
+{% if users_interested %}
+<p>Number of Interested Users : {{ num_interested }} / {{ total_users_registered }}</p>
+{% for user in users_interested %}
+    <p>{{user[0]}}  :  {{user[1]}}</p>
+{% endfor %}
+{% endif %}
+{% endif %}
+
 {% endblock %}

@@ -17,11 +17,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     {% block head %}
     <title>{% block title %}Bennett University {% endblock %}</title>
+
+    <!--    font awesome icons  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout-style.css') }}">
     {% endblock %}
 
     {% block style %}
     {% endblock %}
+
+<!--    tooltip jQuery     -->
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+</script>
     {% block script_block %}
     {% endblock %}
 </head>

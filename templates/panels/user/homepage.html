@@ -26,12 +26,24 @@ Homepage
             <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
             <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
 
-            <a href="/events/{{event.ID}}" class="card-link"><input type="button"
-                            value="Read More"></a>
-            <br/><br/>
-            <a href="/events/remove-from-fav/{{event.ID}}" class="card-link">
-                <input type="button" value="Remove From Favourites" style="float:right;">
+<!--            <a href="/events/{{event.ID}}" class="card-link"><input type="button"-->
+<!--                            value="Read More"></a>-->
+<!--            <br/><br/>-->
+<!--            <a href="/events/remove-from-fav/{{event.ID}}" class="card-link">-->
+<!--                <input type="button" value="Remove From Favourites" style="float:right;">-->
+<!--            </a>-->
+            <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
+                <button>
+                    <i class="fa fa-book"></i>
+                </button>
             </a>
+
+            <a href="/events/remove-from-fav/{{event.ID}}" data-toggle="tooltip" title="Remove From Favourites">
+                <button>
+                    <i class="fa fa-thumbs-down"></i>
+                </button>
+            </a>
+
         </div>
     </div>
     {% endfor %}

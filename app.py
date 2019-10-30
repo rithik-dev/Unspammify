@@ -5,12 +5,31 @@ from passlib.hash import sha256_crypt  # password encryption
 from datetime import timedelta
 from flask_mail import Mail, Message  # to send email
 from forms import (LoginForm, RegisterForm)  # , OTPForm)
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_pyfile('app_config.py')
 db = SQLAlchemy(app)
 
 mail = Mail(app)
+
+
+def sort_events(lst):    # sort events based on date only
+    new_list = []
+
+    while lst:
+        minimum = datetime.strptime(lst[0].EventDate, '%d/%m/%Y').date()
+        ev = lst[0]
+        for e in lst:
+            event_date = datetime.strptime(e.EventDate, '%d/%m/%Y').date()
+            if event_date < minimum:
+                minimum = event_date
+                ev = e
+        new_list.append(ev)
+        if ev in lst:
+            lst.remove(ev)
+
+    return new_list
 
 
 def get_session():
@@ -30,8 +49,12 @@ def sendMail(subject, message, recipients, message_on_true):
         flash(message_on_true, 'success')
         return True
     except Exception as e:
-        flash("Error Sending Email", 'danger')
-        return False
+        if recipients:    # there is atleast one interested user
+            flash("Error Sending Email", 'danger')
+            return False
+        else:
+            flash("Email Not Sent As No User Was Interested !!", 'warning')
+            return False
 
 
 # def addAdmin(id, password):
@@ -78,7 +101,7 @@ def logged_in_user(user_id):
         events = []
         for event in favourite_events:
             events.append(EventsModel.query.filter_by(ID=event).first())
-        return render_template("panels/user/homepage.html", events=events)
+        return render_template("panels/user/homepage.html", events=sort_events(events))
     else:
         flash(f"User '{user_id}' Not Logged In", 'danger')
         print(f"User '{user_id}' Not Logged In")

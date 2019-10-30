@@ -39,14 +39,18 @@ section[class="content"] {
 }
 
 .card-body{
-    height:310px;
+    height:280px;
+}
+
+.card-body .card-subtitle{
+padding:2px;
 }
 .card .card-body .card-title,
 .card .card-body .card-link {
   color: black;
 }
 
-input[type="button"] {
+input[type="button"],button {
   background-color: var(--card-button-color);
   padding: 5px;
   text-align: center;
@@ -59,11 +63,16 @@ input[type="button"] {
   box-shadow: 0 3px #999;
   transition: 0.1s;
 }
-input[type="button"]:hover {
+input[type="button"]:hover{
   font-weight: bold;
 }
 
-input[type="button"]:active {
+a button{
+  font-size:28px;
+  padding:11px;
+}
+
+input[type="button"]:active{
   box-shadow: 0 1px #666;
   transform: translateY(2px);
 }

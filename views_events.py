@@ -1,27 +1,10 @@
-from app import (app, db, render_template, request, session, flash, redirect, sendMail)
+from app import (app, db, render_template, request, session, flash, redirect, sendMail, sort_events)
 from forms import AddEvent
 from models import EventsModel, UserModel
 from random import randint  # generating random id for events
 from datetime import datetime, date
 
 URL_PREFIX = '/events'
-#
-#
-# def sort_events(lst):
-#     current_date = date.today()
-#     print("l",lst)
-#     new_list = []
-#     minimum = current_date
-#     while lst:
-#         for e in lst:
-#             event_date = datetime.strptime(e.EventDate, '%d/%m/%Y').date()
-#             if event_date < minimum:
-#                 minimum = event_date
-#                 ev = e
-#         new_list.append(ev)
-#         lst.remove(ev)
-#         print(",,>",new_list)
-#         return new_list
 
 
 def get_event_description(e, msg=''):
@@ -53,7 +36,7 @@ def generate_random_id(length=6):
 def display_events():
     if 'user' in session or 'admin' in session:  # accessible only if user or admin is logged in
         return render_template("events/homepage.html",
-                               events=EventsModel.query.order_by(EventsModel.EventDate).all())
+                               events=sort_events(EventsModel.query.all()))
     else:
         flash("Not Logged In", 'danger')
         print("Not Logged In")
@@ -242,7 +225,22 @@ def display_event(event_id):
             print(f"Event  With ID : '{event_id}' Does Not Exist")
             return redirect(URL_PREFIX)
         else:
-            return render_template('events/display-event-page.html', event=e)
+            users_interested = []
+            num_interested = 0
+            total_users_registered = 0
+            if 'admin' in session:    # if admin in session then show names of interested users
+                rs = UserModel.query.all()
+                total_users_registered = len(rs)
+                for i in rs:
+                    if event_id in i.InterestedActivities:
+                        users_interested.append([i.ID,i.Name])
+                num_interested = len(users_interested)
+
+            return render_template('events/display-event-page.html', event=e,
+                                   users_interested=users_interested,
+                                   num_interested=num_interested,
+                                   total_users_registered=total_users_registered
+                                   )
     else:
         flash("Not Logged In", 'danger')
         print("Not Logged In")
@@ -278,7 +276,6 @@ def delete_old_events():
             if event_date < current_date:
                 # db.session.delete(e)
                 pass
-
             db.session.commit()
         sort_events(events)
 
