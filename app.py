@@ -40,21 +40,23 @@ app.jinja_env.globals.update(get_session=get_session)
 
 
 def sendMail(subject, message, recipients, message_on_true):
-    try:
-        with mail.connect() as conn:
-            msg = Message(recipients=recipients,
-                          body=message,
-                          subject=subject)
-            conn.send(msg)
-        flash(message_on_true, 'success')
-        return True
-    except Exception as e:
-        if recipients:    # there is atleast one interested user
+    if recipients:    # there is atleast one interested user
+        try:
+            with mail.connect() as conn:
+                msg = Message(recipients=recipients,
+                              body=message,
+                              subject=subject)
+                conn.send(msg)
+            flash(message_on_true, 'success')
+            return True
+        except Exception as e:
             flash("Error Sending Email", 'danger')
+            del e
             return False
-        else:
-            flash("Email Not Sent As No User Was Interested !!", 'warning')
-            return False
+    else:      # no user interested
+        flash("Email Not Sent As No User Was Interested !!", 'warning')
+        return False
+
 
 
 # def addAdmin(id, password):

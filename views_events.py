@@ -271,16 +271,20 @@ def delete_old_events():
     if 'admin' in session:
         current_date = date.today()
         events = EventsModel.query.all()
+        num_events = 0      # total number of events deleted
         for e in events:
             event_date = datetime.strptime(e.EventDate, '%d/%m/%Y').date()
             if event_date < current_date:
-                # db.session.delete(e)
-                pass
+                num_events +=1
+                db.session.delete(e)
             db.session.commit()
-        sort_events(events)
 
-        flash("Deleted All Old Events Successfully", 'success')
-        print("Deleted All Old Events Successfully")
+        if num_events:
+            flash(f"Deleted {num_events} Old Events Successfully", 'success')
+            print(f"Deleted {num_events} Old Events Successfully")
+        else:
+            flash("No Old Events Exist [Date Wise]", 'success')
+            print("No Old Events Exist [Date Wise]")
         return redirect('/admin')
     else:
         flash("Admin Not Logged In", 'danger')
