@@ -2,9 +2,26 @@ from app import (app, db, render_template, request, session, flash, redirect, se
 from forms import AddEvent
 from models import EventsModel, UserModel
 from random import randint  # generating random id for events
-from datetime import datetime
+from datetime import datetime, date
 
 URL_PREFIX = '/events'
+#
+#
+# def sort_events(lst):
+#     current_date = date.today()
+#     print("l",lst)
+#     new_list = []
+#     minimum = current_date
+#     while lst:
+#         for e in lst:
+#             event_date = datetime.strptime(e.EventDate, '%d/%m/%Y').date()
+#             if event_date < minimum:
+#                 minimum = event_date
+#                 ev = e
+#         new_list.append(ev)
+#         lst.remove(ev)
+#         print(",,>",new_list)
+#         return new_list
 
 
 def get_event_description(e, msg=''):
@@ -41,6 +58,7 @@ def display_events():
         flash("Not Logged In", 'danger')
         print("Not Logged In")
         return redirect('/login')
+
 
 # add new event
 @app.route(URL_PREFIX + '/add', methods=['GET', 'POST'])
@@ -231,7 +249,6 @@ def display_event(event_id):
         return redirect('/login')
 
 
-
 @app.route(URL_PREFIX + '/add-to-fav/<string:event_id>')
 def add_event_to_favourites(event_id):
     if 'user' in session:
@@ -248,6 +265,29 @@ def add_event_to_favourites(event_id):
     else:
         flash("User Not Logged In", 'danger')
         print("User Not Logged In")
+        return redirect('/login')
+
+
+@app.route(URL_PREFIX + '/delete-old-events')
+def delete_old_events():
+    if 'admin' in session:
+        current_date = date.today()
+        events = EventsModel.query.all()
+        for e in events:
+            event_date = datetime.strptime(e.EventDate, '%d/%m/%Y').date()
+            if event_date < current_date:
+                # db.session.delete(e)
+                pass
+
+            db.session.commit()
+        sort_events(events)
+
+        flash("Deleted All Old Events Successfully", 'success')
+        print("Deleted All Old Events Successfully")
+        return redirect('/admin')
+    else:
+        flash("Admin Not Logged In", 'danger')
+        print("Admin Not Logged In")
         return redirect('/login')
 
 

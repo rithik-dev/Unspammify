@@ -164,13 +164,13 @@ def register():
 @app.route('/logout')
 def logout():
     if 'admin' in session:
-        admin = session['admin']
+        admin = session['name']
         session.clear()
         flash(f"Admin '{admin}' Logged Out Successfully", 'success')
         print(f"Admin '{admin}' Logged Out Successfully")
         del admin
     elif 'user' in session:
-        user = session['user']
+        user = session['name']
         session.clear()
         flash(f"User '{user}' Logged Out Successfully", 'success')
         print(f"User '{user}' Logged Out Successfully")

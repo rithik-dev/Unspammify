@@ -4,11 +4,20 @@
 Admin Panel
 {% endblock %}
 
+{% block style %}
+<style>
+  .card-body{
+    height:350px;
+}
+</style>
+{% endblock %}
+
 <html>
 
 <body>
     {% block body %}
     <a href="/events/add"><input type="button" value="ADD NEW EVENT"></a>
+    <a href="/events/delete-old-events"><input type="button" value="DELETE OLD EVENTS"></a>
     <br /><br />
     <h3 style="color:white;">ANNOUNCEMENTS</h3>
 
