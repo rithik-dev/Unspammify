@@ -25,11 +25,59 @@
 </style>
 {% endblock %}
 
+{% block script_block %}
+<script>
+   function displayToggle() {
+   var x = document.getElementById("user-data-events");
+   if (x.style.display === "block") {
+      x.style.display = "none";
+   }
+   else {
+      x.style.display = "block";
+   }
+}
+</script>
+{% endblock %}
+
 {% set session = get_session() %}
 
 {% block body %}
 
-<h2><b>{{ event.EventHeading }}</b></h2>
+<!-- displaying interested users name here only if admin is logged in  -->
+{% if 'admin' in session %}
+   <div id="user-data-events">
+      {% if users_interested %}
+         <h4><u>Number of Interested Users : <b>{{ num_interested }} / {{ total_users_registered }}</b></u></h4>
+         <br/>
+         <table>
+            {% for user in users_interested %}
+               <tr>
+                  <td>
+                     <h5>{{user[1]}}</h5>
+                  </td>
+                  <td>
+                     <h5>( {{user[0]}} )</h5>
+                  </td>
+               </tr>
+            {% endfor %}
+         </table>
+      {% endif %}
+   </div>   <!-- user-data-events ends -->
+{% endif %}
+
+{% if 'admin' in session %}
+<div class="users-icon-admin" >
+   <a onclick="displayToggle()" data-toggle="tooltip" title="Interested Users">
+      <h2>
+         <b>
+            <i class="fa fa-users" style="font-size:35px;padding:5px;color:black"></i>
+         </b>
+      </h2>
+   </a>
+</div>
+{% endif %}
+
+<h2><b>{{ event.EventHeading }}   </b></h2>
 <br>
 <h4>
    <pre>
@@ -58,45 +106,29 @@
 {% elif 'admin' in session %}
 
    <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
-   <button>
-   <i class="fa fa-book"></i>
-   </button>
+      <button>
+         <i class="fa fa-book"></i>
+      </button>
    </a>
    <a href="/events/modify/{{event.ID}}" data-toggle="tooltip" title="Modify Event">
-   <button>
-   <i class="fa fa-edit"></i>
-   </button>
+      <button>
+         <i class="fa fa-edit"></i>
+      </button>
    </a>
    <a href="/events/delete/{{event.ID}}" data-toggle="tooltip" title="Delete Event">
-   <button>
-   <i class="fa fa-trash-o"></i>
-   </button>
+      <button>
+         <i class="fa fa-trash-o"></i>
+      </button>
    </a>
    <a href="/events/send-reminder/{{event.ID}}" data-toggle="tooltip" title="Send Reminder">
-   <button>
-   <i class="fa fa-bell"></i>
-   </button>
+      <button>
+         <i class="fa fa-bell"></i>
+      </button>
    </a>
+{% endif %}
 
-   <!-- displaying interested users name here only if admin is logged in  -->
-   <div class="user-data-events">
-      {% if users_interested %}
-      <h4><u>Number of Interested Users : <b>{{ num_interested }} / {{ total_users_registered }}</b></u></h4>
-      <br/>
-      <table>
-         {% for user in users_interested %}
-         <tr>
-            <td>
-               <h5>{{user[1]}}</h5>
-            </td>
-            <td>
-               <h5>( {{user[0]}} )</h5>
-            </td>
-         </tr>
-         {% endfor %}
-      </table>
-      {% endif %}
+<br/>
+<br/>
+<br/>
 
-   {% endif %}
-</div>
 {% endblock %}
