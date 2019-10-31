@@ -8,16 +8,21 @@ URL_PREFIX = '/events'
 
 
 def get_event_description(e, msg=''):
-    return f"""
-###  {msg}  ###
-{e.EventHeading}
+    m = f"""
+ ♦ {e.EventHeading}
+
 
 {e.EventDescription}
 
-Date : {e.EventDate}
-Time : {e.EventTime}
-Venue : {e.EventVenue}
+♦ Date : {e.EventDate}
+♦ Time : {e.EventTime}
+♦ Venue : {e.EventVenue}
+
 """
+    if msg == '':
+        return m
+    else:
+        return f"#####  {msg}  #####\n" + m
 
 
 def generate_random_id(length=6):
@@ -129,7 +134,7 @@ def modify_event(event_id):
                     changes.append('Description')
 
                 if event_modified:
-                    msg = " ".join([x for x in changes]) + " Changed"
+                    msg = " , ".join([x for x in changes]) + " Changed"
 
                     db.session.commit()
 
