@@ -2,10 +2,9 @@ from flask import (Flask, request, render_template, session, flash, redirect, ur
 
 from flask_sqlalchemy import SQLAlchemy  # database
 from passlib.hash import sha256_crypt  # password encryption
-from datetime import timedelta
+from datetime import timedelta, datetime
 from flask_mail import Mail, Message  # to send email
 from forms import (LoginForm, RegisterForm)
-from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_pyfile('app_config.py')

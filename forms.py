@@ -27,6 +27,6 @@ class AddEvent(Form):
     time = StringField('', [validators.DataRequired()],
                        render_kw={'placeholder': 'Event Time'})
     heading = StringField('', [validators.DataRequired()], render_kw={
-        'placeholder': 'Event Heading'})
+        'placeholder': 'Event Heading (As short as possible)'})
     description = TextAreaField('', [validators.DataRequired()], render_kw={
             'placeholder': 'Event Description'})
