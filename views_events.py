@@ -228,12 +228,12 @@ def display_event(event_id):
             users_interested = []
             num_interested = 0
             total_users_registered = 0
-            if 'admin' in session:    # if admin in session then show names of interested users
+            if 'admin' in session:  # if admin in session then show names of interested users
                 rs = UserModel.query.all()
                 total_users_registered = len(rs)
                 for i in rs:
                     if event_id in i.InterestedActivities:
-                        users_interested.append([i.ID,i.Name])
+                        users_interested.append([i.ID, i.Name])
                 num_interested = len(users_interested)
 
             return render_template('events/display-event-page.html', event=e,
@@ -271,11 +271,11 @@ def delete_old_events():
     if 'admin' in session:
         current_date = date.today()
         events = EventsModel.query.all()
-        num_events = 0      # total number of events deleted
+        num_events = 0  # total number of events deleted
         for e in events:
             event_date = datetime.strptime(e.EventDate, '%d/%m/%Y').date()
             if event_date < current_date:
-                num_events +=1
+                num_events += 1
                 db.session.delete(e)
             db.session.commit()
 

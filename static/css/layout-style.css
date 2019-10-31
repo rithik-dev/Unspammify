@@ -1,126 +1,147 @@
 :root {
-  --primary-color: white;
-  --card-background: #dedcb0;
-  --text-color: black;
-  --card-button-color: #fff;
+	--primary-color: white;
+	--card-background: #dedcb0;
+	--text-color: black;
+	--card-button-color: #fff;
 }
 
 * {
-  padding: 0;
-  margin: 0;
-  font-family: sans-serif;
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
 }
+
 body {
-  background: url("/static/img/bg.jpg");
-  background-size: cover;
+	background: url("/static/img/bg.jpg");
+	background-size: cover;
 }
+
 .container .text-main {
-  position: absolute;
-  top: 90%;
-  left: 90%;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	top: 90%;
+	left: 90%;
+	transform: translate(-50%, -50%);
 }
+
 a {
-  color: var(--text-color);
+	color: var(--text-color);
 }
+
 section[class="content"] {
-  padding-top: 100px;
-  width: 95%;
-  justify-content: center;
-  margin: 0 auto;
+	padding-top: 100px;
+	width: 95%;
+	justify-content: center;
+	margin: 0 auto;
 }
+
 .card {
-  float: left;
-  border-radius: 20px;
-  padding: 10px;
-  margin: 10px;
-  width: 100%;
-  background: var(--card-background);
+	float: left;
+	border-radius: 20px;
+	padding: 10px;
+	margin: 10px;
+	width: 100%;
+	background: var(--card-background);
 }
 
-.card-body{
-    height:280px;
+.card-body {
+	height: 280px;
 }
 
-.card-body .card-subtitle{
-padding:2px;
+.card-body .card-subtitle {
+	padding: 2px;
 }
+
 .card .card-body .card-title,
 .card .card-body .card-link {
-  color: black;
+	color: black;
 }
 
-input[type="button"],button {
-  background-color: var(--card-button-color);
-  padding: 5px;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  outline: none;
-  box-shadow: 0 3px #999;
-  transition: 0.1s;
-}
-input[type="button"]:hover{
-  font-weight: bold;
+input[type="button"],
+button {
+	background-color: var(--card-button-color);
+	padding: 5px;
+	text-align: center;
+	border-radius: 10px;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+	outline: none;
+	box-shadow: 0 3px #999;
+	transition: 0.1s;
 }
 
-a button{
-  font-size:28px;
-  padding:11px;
-}
-.card-btn-container{
-position:absolute;
-padding:2px;
-bottom:10px;
+input[type="button"]:hover {
+	font-weight: bold;
 }
 
-input[type="button"]:active{
-  box-shadow: 0 1px #666;
-  transform: translateY(2px);
+a button {
+	font-size: 28px;
+	padding: 11px;
 }
+
+.card-btn-container {
+	position: absolute;
+	padding: 2px;
+	bottom: 10px;
+}
+
+input[type="button"]:active {
+	box-shadow: 0 1px #666;
+	transform: translateY(2px);
+}
+
 header {
-  position: absolute;
-  z-index: 2;
-  width: 100%;
+	position: absolute;
+	z-index: 2;
+	width: 100%;
 }
+
 .banner {
-  padding-left: 50px;
-  padding-right: 150px;
-  position: absolute;
-  top: 25%;
-  left: 15%;
+	padding-left: 50px;
+	padding-right: 150px;
+	position: absolute;
+	top: 25%;
+	left: 15%;
 }
+
 .banner h2 {
-  margin: 0;
-  padding: 0;
-  font-size: 2.8em;
-  font-weight: 700;
-  text-transform: uppercase;
+	margin: 0;
+	padding: 0;
+	font-size: 2.8em;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .banner p {
-  margin: 1em 0 0;
-  padding: 0;
-  font-size: 1.2em;
-  line-height: 1.5em;
+	margin: 1em 0 0;
+	padding: 0;
+	font-size: 1.2em;
+	line-height: 1.5em;
 }
+
 .dropdown:hover .dropdown-menu {
-  display: block;
+	display: block;
 }
+
 .event-section .leftBox .content * {
-  color: var(--card-background);
+	color: var(--card-background);
 }
 
 .dropdown .dropdown-menu a:hover {
-  background-color: gold;
-  font-weight: bold;
+	background-color: gold;
+	font-weight: bold;
 }
-.user-data-events{
-    color:var(--card-background);
-    position:absolute;
-    bottom:10%;
-    right:5%;
+
+.user-data-events {
+	color: var(--card-background);
+	position: absolute;
+	bottom: 10%;
+	right: 5%;
+}
+
+textarea {
+	resize: both;
+	color: var(--card-background);
+	background: transparent;
 }

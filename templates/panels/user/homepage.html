@@ -1,56 +1,51 @@
 {% extends "layout.html" %}
-<html>
+
+{% set session = get_session() %}
 
 {% block title %}
-Homepage
+{{ session['name'] }}
 {% endblock %}
 
 {% block style %}
 <style>
-  .card-body{
-    height:280px;
-}
+      .card-body {
+          height: 280px;
+      }
 </style>
 {% endblock %}
 
-<body>
-    {% block body %}
-    <h3 style="color:white;">INTERESTED EVENTS</h3>
-    {% for event in events %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-text" style="color:black;"><b>{{event.EventHeading}}</b></h5>
-            <br/>
-<!--            <p class="card-text" style="color:black;">{{event.EventDescription}}</p>-->
-            <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
-            <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
-            <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
+<html>
+   <body>
+      {% block body %}
+          <h3 style="color:white;">INTERESTED EVENTS</h3>
+          {% for event in events %}
+          <div class="card" style="width: 18rem;">
+             <div class="card-body">
+                <h5 class="card-text" style="color:black;"><b>{{event.EventHeading}}</b></h5>
+                <br/>
+                <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
+                <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
+                <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
 
-<!--            <a href="/events/{{event.ID}}" class="card-link"><input type="button"-->
-<!--                            value="Read More"></a>-->
-<!--            <br/><br/>-->
-<!--            <a href="/events/remove-from-fav/{{event.ID}}" class="card-link">-->
-<!--                <input type="button" value="Remove From Favourites" style="float:right;">-->
-<!--            </a>-->
+                <div class="card-btn-container">
 
-            <div class="card-btn-container">
-            <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
-                <button>
-                    <i class="fa fa-book"></i>
-                </button>
-            </a>
+                   <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
+                       <button>
+                           <i class="fa fa-book"></i>
+                       </button>
+                   </a>
+                   <a href="/events/remove-from-fav/{{event.ID}}" data-toggle="tooltip" title="Remove From Favourites">
+                       <button>
+                           <i class="fa fa-thumbs-down"></i>
+                       </button>
+                   </a>
 
-            <a href="/events/remove-from-fav/{{event.ID}}" data-toggle="tooltip" title="Remove From Favourites">
-                <button>
-                    <i class="fa fa-thumbs-down"></i>
-                </button>
-            </a>
-            </div>
+                </div>   <!-- card-btn-container ends -->
+             </div>   <!-- card-body ends -->
+          </div>   <!-- card ends -->
+          {% endfor %}
 
-        </div>
-    </div>
-    {% endfor %}
-    {% endblock %}
-</body>
+      {% endblock %}
+   </body>
 
 </html>

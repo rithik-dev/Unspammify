@@ -1,11 +1,11 @@
 {% extends "///layout.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 {% block title %}
 BU Events
 {% endblock %}
-
 
 <head>
     <meta charset="UTF-8">
@@ -33,68 +33,64 @@ BU Events
                 <div class="card-body">
                     <h5 class="card-title"><b>{{event.EventHeading}}</b></h5>
                     <br/>
-<!--                    <p class="card-text" style="color:black">{{event.EventDescription}}</p>-->
                     <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
                     <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
                     <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
 
-<!--                    <a href="/events/{{event.ID}}" class="card-link"><input type="button"-->
-<!--                            value="Read More"></a>-->
-
-<!--                    <br/><br/>-->
-<!--                    <a href="/events/add-to-fav/{{event.ID}}" class="card-link"><input type="button"-->
-<!--                            value="Add To Favourites"></a>-->
-
                     {% set session = get_session() %}
                     {% if 'user' in session %}
                     <div class="card-btn-container">
-                    <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
-                        <button>
-                            <i class="fa fa-book"></i>
-                        </button>
-                    </a>
 
-                    <a href="/events/add-to-fav/{{event.ID}}" data-toggle="tooltip" title="Add To Favourites">
-                        <button>
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
-                    </a>
+                        <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
+                            <button>
+                                <i class="fa fa-book"></i>
+                            </button>
+                        </a>
+
+                        <a href="/events/add-to-fav/{{event.ID}}" data-toggle="tooltip" title="Add To Favourites">
+                            <button>
+                                <i class="fa fa-thumbs-up"></i>
+                            </button>
+                        </a>
                     </div>
 
                     {% elif 'admin' in session %}
-<!--                    if admin in logged in  ...    -->
+
+<!--                if admin in logged in  ...    -->
+
                     <div class="card-btn-container">
-                    <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
-                        <button>
-                            <i class="fa fa-book"></i>
-                        </button>
-                    </a>
 
-                    <a href="/events/modify/{{event.ID}}" data-toggle="tooltip" title="Modify Event">
-                        <button>
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </a>
+                        <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
+                            <button>
+                                <i class="fa fa-book"></i>
+                            </button>
+                        </a>
 
-                    <a href="/events/delete/{{event.ID}}" data-toggle="tooltip" title="Delete Event">
-                        <button>
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                    </a>
+                        <a href="/events/modify/{{event.ID}}" data-toggle="tooltip" title="Modify Event">
+                            <button>
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </a>
 
-                    <a href="/events/send-reminder/{{event.ID}}" data-toggle="tooltip" title="Send Reminder">
-                        <button>
-                            <i class="fa fa-bell"></i>
-                        </button>
-                    </a>
-                    </div>
+                        <a href="/events/delete/{{event.ID}}" data-toggle="tooltip" title="Delete Event">
+                            <button>
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </a>
+
+                        <a href="/events/send-reminder/{{event.ID}}" data-toggle="tooltip" title="Send Reminder">
+                            <button>
+                                <i class="fa fa-bell"></i>
+                            </button>
+                        </a>
+                    </div>       <!-- card-btn-container ends -->
                     {% endif %}
 
-                </div>
-            </div>
+                </div>    <!-- card-body ends -->
+            </div>    <!-- card ends -->
             {% endfor %}
-        </div>
-    </section>
+        </div>   <!-- events ends -->
+    </section>   <!-- event-section ends -->
     {% endblock %}
 </body>
 

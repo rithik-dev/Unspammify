@@ -1,38 +1,34 @@
 {% extends "layout.html" %}
-<html>
 
 {% block title %}
 BU : Login
 {% endblock %}
 
-<head>
-    <meta charset="utf-8">
-    {% block style %}
-    <link rel="stylesheet" type="text/css" href="/static/css/form-style.css">
-    {% endblock %}
-</head>
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/form-style.css">
+{% endblock %}
 <html>
+   <body>
+      {% block body %}
+      <center>
+         <h2><strong>LOGIN</strong></h2>
+      </center>
 
-<body>
-    {% block body %}
-    <center>
-        <h2><strong>LOGIN</strong></h2>
-    </center>
-    <div class="box">
-        <form method="POST">
+      <div class="box">
+         <form method="POST">
             <div class="inputBox">
-                {{ form.user_id.label }}
-                {{ form.user_id }}
+               {{ form.user_id.label }}
+               {{ form.user_id }}
             </div>
             <div class="inputBox">
-                {{ form.password.label }}
-                {{ form.password }}
+               {{ form.password.label }}
+               {{ form.password }}
             </div>
             <a href="/register" style="color:white;">Register</a>
             <input type="submit" name="" value="SUBMIT">
-        </form>
-    </div>
-    {% endblock %}
-</body>
+         </form>
+      </div>  <!-- box ends -->
+      {% endblock %}
 
+   </body>
 </html>

@@ -1,131 +1,113 @@
 <!DOCTYPE html>
+
 <html lang="en">
+   <head>
+      <!-- BOOTSTRAP LINKS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+         crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+         crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+         crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<head>
-    <!-- BOOTSTRAP LINKS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    {% block head %}
-    <title>{% block title %}Bennett University {% endblock %}</title>
+      {% block head %}
+      <title>{% block title %}Bennett University {% endblock %}</title>
+      <!--    font awesome icons  -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!--    css style sheet  -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout-style.css') }}">
+      {% endblock %}
 
-    <!--    font awesome icons  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      {% block style %}
+      {% endblock %}
 
+      <!--    tooltip jQuery     -->
+      <script>
+         $(document).ready(function(){
+             $('[data-toggle="tooltip"]').tooltip();
+         });
+      </script>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout-style.css') }}">
-    {% endblock %}
+      {% block script_block %}
+      {% endblock %}
+   </head>
 
-    {% block style %}
-    {% endblock %}
+   <body>
+      {% set session = get_session() %}
 
-<!--    tooltip jQuery     -->
-    <script>
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-</script>
-    {% block script_block %}
-    {% endblock %}
-</head>
-
-<body>
-{% set session = get_session() %}
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <header>
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="/"><img src="{{ url_for('static',filename='img/logo.png') }}" alt="Logo"
-                    width="60">
+               width="60">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-<!--                    <li class="nav-item dropdown">-->
-<!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
-<!--                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                            MY ACCOUNT-->
-<!--                        </a>-->
-<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                            <a class="dropdown-item" href="/dashboard">MY ACCOUNT</a>-->
-<!--                            <a class="dropdown-item" href="/logout">LOGOUT</a>-->
-<!--                        </div>-->
-<!--                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">{{ session['name'] }}</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">HOME<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/events">EVENTS</a>
-                    </li>
-<!--                    <li class="nav-item dropdown ">-->
-<!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
-<!--                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                            LOGIN-->
-<!--                        </a>-->
-<!--                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">-->
-<!--                            <a class="dropdown-item" href="/login">LOGIN</a>-->
-<!--                            <a class="dropdown-item" href="/register">REGISTER</a>-->
-<!--                        </div>-->
-<!--                    </li>-->
-                    {% if 'user' in session or 'admin' in session %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">LOGOUT</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">LOGIN</a>
-                    </li>
-                    {% endif %}
-                </ul>
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="/dashboard">{{ session['name'] }}</a>
+                  </li>
+                  <li class="nav-item active">
+                     <a class="nav-link" href="/">HOME<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/events">EVENTS</a>
+                  </li>
+                  {% if 'user' in session or 'admin' in session %}
+                  <li class="nav-item">
+                     <a class="nav-link" href="/logout">LOGOUT</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                     <a class="nav-link" href="/login">LOGIN</a>
+                  </li>
+                  {% endif %}
+               </ul>
             </div>
-        </nav>
-    </header>
+         </nav>
+      </header>
 
-    <section class="content">
-        <!-- flashed messages -->
-        <div class="container-fluid" style="min-height:100%">
+      <section class="content">
+
+         <!-- flashed messages -->
+         <div class="container-fluid" style="min-height:100%">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category,message in messages %}
             <div class="alert alert-{{category}} alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                        aria-hidden="true">x</span></button>
-                {{message}}
+               <a type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                  aria-hidden="true">x</span></a>
+               {{message}}
             </div>
             {% endfor %}
             {% endif %}
             {% endwith %}
-        </div>
-        {% block body %}
-        <section class="banner">
-            <div class="container">
-                <div class="text-main">
-                    <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                    <h2 style="color:#fff;display:inline">
-                        UNSPAMMIFY.
-                    </h2>
-                    <br /><br /><br />
-                    <i>
-                        <h3 style="color:#fff;display:inline">You got 99 problems .. Spamming ain't one !!</h3>
-                    </i>
-                </div>
-            </div>
-        </section>
-        {% endblock %}
-    </section>
-</body>
+         </div>   <!-- container-fluid ends -->
 
+         {% block body %}
+         <section class="banner">
+            <div class="container">
+               <div class="text-main">
+                  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                  <h2 style="color:#fff;display:inline">
+                     UNSPAMMIFY.
+                  </h2>
+                  <br /><br /><br />
+                  <i>
+                     <h3 style="color:#fff;display:inline">You got 99 problems .. Spamming ain't one !!</h3>
+                  </i>
+               </div>   <!-- text-main ends -->
+            </div>    <!-- container ends -->
+         </section>    <!-- banner ends -->
+         {% endblock %}
+      </section>    <!-- content ends -->
+   </body>
 </html>

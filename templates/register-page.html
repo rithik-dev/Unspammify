@@ -1,46 +1,45 @@
 {% extends "layout.html" %}
-<html>
 
 {% block title %}
 BU : Register
 {% endblock %}
 
-<head>
-    <meta charset="utf-8">
-    {% block style %}
-    <link rel="stylesheet" type="text/css" href="/static/css/form-style.css">
-    {% endblock %}
-</head>
 <html>
+   <head>
+      <meta charset="utf-8">
+      {% block style %}
+           <link rel="stylesheet" type="text/css" href="/static/css/form-style.css">
+      {% endblock %}
+   </head>
 
-<body>
-    {% block body %}
-    <center>
-        <h2><strong>REGISTER</strong></h2>
-    </center>
-    <div class="box">
-        <form method="POST">
+   <body>
+      {% block body %}
+      <center>
+         <h2><strong>REGISTER</strong></h2>
+      </center>
+      <div class="box">
+         <form method="POST">
             <div class="inputBox">
-                {{ form.first_name.label }}
-                {{ form.first_name }}
+               {{ form.first_name.label }}
+               {{ form.first_name }}
             </div>
             <div class="inputBox">
-                {{ form.last_name.label }}
-                {{ form.last_name }}
+               {{ form.last_name.label }}
+               {{ form.last_name }}
             </div>
             <div class="inputBox">
-                {{ form.user_id.label }}
-                {{ form.user_id }}
+               {{ form.user_id.label }}
+               {{ form.user_id }}
             </div>
             <div class="inputBox">
-                {{ form.password.label }}
-                {{ form.password }}
+               {{ form.password.label }}
+               {{ form.password }}
             </div>
             <a href="/login" style="color:white;">Login</a>
             <input type="submit" name="" value="SUBMIT">
-        </form>
-    </div>
-    {% endblock %}
-</body>
+         </form>
+      </div>   <!-- box ends -->
+      {% endblock %}
+   </body>
 
 </html>

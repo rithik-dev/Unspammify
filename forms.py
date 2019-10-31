@@ -1,4 +1,4 @@
-from wtforms import Form, validators, StringField, PasswordField
+from wtforms import Form, validators, StringField, PasswordField,TextAreaField
 from wtforms.fields.html5 import DateField
 
 
@@ -19,10 +19,6 @@ class RegisterForm(Form):
     password = PasswordField('', [validators.DataRequired()], render_kw={'placeholder': 'Password'})
 
 
-# class OTPForm(Form):
-#     OTP = StringField('', [validators.DataRequired()], render_kw={'autofocus': True, 'placeholder': 'Enter OTP'})
-
-
 class AddEvent(Form):
     date = DateField('', [validators.DataRequired()], render_kw={
             'autofocus': True, 'placeholder': 'Event Date ?'})
@@ -32,5 +28,5 @@ class AddEvent(Form):
                        render_kw={'placeholder': 'Event Time'})
     heading = StringField('', [validators.DataRequired()], render_kw={
         'placeholder': 'Event Heading'})
-    description = StringField('', [validators.DataRequired()], render_kw={
+    description = TextAreaField('', [validators.DataRequired()], render_kw={
             'placeholder': 'Event Description'})

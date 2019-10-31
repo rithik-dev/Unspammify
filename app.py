@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy  # database
 from passlib.hash import sha256_crypt  # password encryption
 from datetime import timedelta
 from flask_mail import Mail, Message  # to send email
-from forms import (LoginForm, RegisterForm)  # , OTPForm)
+from forms import (LoginForm, RegisterForm)
 from datetime import datetime
 
 app = Flask(__name__)
@@ -212,35 +212,3 @@ if __name__ == '__main__':
 #     db.session.add(u)
 #     db.session.commit()
 #     print(f"Admin Added [ID : '{id}']")
-
-
-
-# VERIFY USER EMAIL ID WITH OTP???
-# otp = generate_otp()
-#             email = id + '@bennett.edu.in'
-#             values = {
-#                 'subject': 'REGISTER NEW USER @UNSPAMMIFY',
-#                 'message': 'Your OTP to register @unspammify is ' + otp,
-#                 'message_on_true': f"An Email has been sent to '{email}' with an OTP",
-#                 'recipients': [email]
-#             }
-#             if sendMail(**values):
-#                 form_otp = OTPForm(request.form)
-#                 if request.method == "POST" and form_otp.validate():
-#                     user_entered_otp = str(form_otp.OTP.data).strip()
-#                     print("userotp", user_entered_otp)
-#                     if user_entered_otp == otp:
-#                         # add user to database
-#                         print("added to database")
-#                         u = UserModel(f"{f_name} {l_name}", id, password, '')
-#                         db.session.add(u)
-#                         db.session.commit()
-#
-#                         flash(f"Successfully Registered User '{f_name} {l_name}' [{id}]", 'success')
-#                         print(f"Successfully Registered User '{f_name} {l_name}' [{id}]")
-#                     else:
-#                         flash("Wrong OTP Entered !!", 'danger')
-#                         print(f"Successfully Registered User '{f_name} {l_name}' [{id}]")
-#                         return redirect('/register')
-#
-#                 return render_template("otp-verify.html", form=form_otp)

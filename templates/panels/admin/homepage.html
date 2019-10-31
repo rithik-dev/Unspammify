@@ -6,74 +6,53 @@ Admin Panel
 
 {% block style %}
 <style>
-  .card-body{
-    height:270px;
-}
+   .card-body {
+	    height: 270px;
+   }
 </style>
 {% endblock %}
 
 <html>
+   <body>
+      {% block body %}
+          <a href="/events/add"><input type="button" value="ADD NEW EVENT"></a>
+          <a href="/events/delete-old-events"><input type="button" value="DELETE OLD EVENTS"></a>
+          <br /><br />
+          <h3 style="color:white;">ANNOUNCEMENTS</h3>
+          {% for event in events %}
+          <div class="card" style="width: 18rem;">
+             <div class="card-body">
+                <h5 class="card-title"><b>{{event.EventHeading}}</b></h5>
+                <br/>
+                <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
+                <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
+                <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
 
-<body>
-    {% block body %}
-    <a href="/events/add"><input type="button" value="ADD NEW EVENT"></a>
-    <a href="/events/delete-old-events"><input type="button" value="DELETE OLD EVENTS"></a>
-    <br /><br />
-    <h3 style="color:white;">ANNOUNCEMENTS</h3>
-
-    {% for event in events %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title"><b>{{event.EventHeading}}</b></h5>
-            <br/>
-<!--            <p class="card-text" style="color:black;">{{event.EventDescription}}</p>-->
-            <h6 class="card-subtitle mb-2"><b>Date : </b>{{event.EventDate}}</h6>
-            <h6 class="card-subtitle mb-2"><b>Time : </b>{{event.EventTime}}</h6>
-            <h6 class="card-subtitle mb-2"><b>Venue : </b>{{event.EventVenue}}</h6>
-
-<!--            <a href="/events/{{event.ID}}" class="card-link"><input type="button"-->
-<!--                            value="Read More"></a>-->
-<!--            <a href="/events/{{event.ID}}" class="card-link"><i class="fa fa-book" style="font-size:48px"></i></a>-->
-            <div class="card-btn-container">
-            <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
-                <button>
-                    <i class="fa fa-book"></i>
-                </button>
-            </a>
-
-            <a href="/events/modify/{{event.ID}}" data-toggle="tooltip" title="Modify Event">
-                <button>
-                    <i class="fa fa-edit"></i>
-                </button>
-            </a>
-
-            <a href="/events/delete/{{event.ID}}" data-toggle="tooltip" title="Delete Event">
-                <button>
-                    <i class="fa fa-trash-o"></i>
-                </button>
-            </a>
-
-            <a href="/events/send-reminder/{{event.ID}}" data-toggle="tooltip" title="Send Reminder">
-                <button>
-                    <i class="fa fa-bell"></i>
-                </button>
-            </a>
-            </div>
-<!--            <br/><br/>-->
-<!--            <a href="/events/modify/{{event.ID}}" class="card-link"><input type="button" value="MODIFY"> </a>-->
-
-<!--            <a href="/events/modify/{{event.ID}}" class="card-link"><i class="fa fa-edit" style="font-size:48px"></i></a>-->
-<!--            <a href="/events/delete/{{event.ID}}"><input type="button" value="DELETE"></a>-->
-
-<!--            <a href="/events/delete/{{event.ID}}"><i class="fa fa-trash-o" style="font-size:48px"></i></a>-->
-<!--            <br/><br/>-->
-<!--            <a href="/events/send-reminder/{{event.ID}}" class="card-link"><i class="fa fa-bell" style="font-size:48px"></i></a>-->
-
-<!--            <a href="/events/send-reminder/{{event.ID}}" class="card-link"><input type="button" value="SEND REMINDER"></a>-->
-        </div>
-    </div>
-    {% endfor %}
-    {% endblock %}
-</body>
-
+                <div class="card-btn-container">
+                   <a href="/events/{{event.ID}}" data-toggle="tooltip" title="Read More">
+                       <button>
+                           <i class="fa fa-book"></i>
+                       </button>
+                   </a>
+                   <a href="/events/modify/{{event.ID}}" data-toggle="tooltip" title="Modify Event">
+                       <button>
+                           <i class="fa fa-edit"></i>
+                       </button>
+                   </a>
+                   <a href="/events/delete/{{event.ID}}" data-toggle="tooltip" title="Delete Event">
+                       <button>
+                           <i class="fa fa-trash-o"></i>
+                       </button>
+                   </a>
+                   <a href="/events/send-reminder/{{event.ID}}" data-toggle="tooltip" title="Send Reminder">
+                       <button>
+                           <i class="fa fa-bell"></i>
+                       </button>
+                   </a>
+                </div>   <!-- card-btn-container ends -->
+             </div>   <!-- card-body ends -->
+          </div>    <!-- card ends -->
+          {% endfor %}
+      {% endblock %}
+   </body>
 </html>
