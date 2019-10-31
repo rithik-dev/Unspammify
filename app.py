@@ -1,9 +1,4 @@
-from models import (UserModel, AdminModel, EventsModel)
-from views_admin import *
-from views_errors import *
-from views_events import *
-from flask import (Flask, request, render_template,
-                   session, flash, redirect, url_for)
+from flask import (Flask, request, render_template, session, flash, redirect, url_for)
 
 from flask_sqlalchemy import SQLAlchemy  # database
 from passlib.hash import sha256_crypt  # password encryption
@@ -93,8 +88,7 @@ def logged_in_user(user_id):
     if 'user' in session and session['user'] == user_id:
         rs = UserModel.query.filter_by(ID=user_id).first()
 
-        favourite_events = str(rs.InterestedActivities).split(
-            ',')  # user's fav events
+        favourite_events = str(rs.InterestedActivities).split(',')  # user's fav events
         favourite_events = favourite_events[:-1]  # as last event is always ''
 
         events = []
@@ -110,14 +104,12 @@ def logged_in_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
-
     if request.method == "POST" and form.validate():
         id = str(form.user_id.data).strip().upper()
         password = str(form.password.data)
 
         if 'ADMIN' in id:  # admin login
-            rs = AdminModel.query.filter_by(
-                ID=id).first()  # rs is admin object
+            rs = AdminModel.query.filter_by(ID=id).first()  # rs is admin object
 
             if rs is not None:  # admin found
 
@@ -147,8 +139,7 @@ def login():
 
                     session['user'] = id
                     session['name'] = rs.Name
-                    flash(
-                        f"Successfully Logged In User : {rs.Name}", 'success')
+                    flash(f"Successfully Logged In User : {rs.Name}", 'success')
                     print(f"Successfully Logged In User : {rs.Name}")
                     return redirect('/user/' + id)
                 else:
@@ -181,8 +172,7 @@ def register():
             db.session.add(u)
             db.session.commit()
 
-            flash(
-                f"Successfully Registered User '{f_name} {l_name}' [{id}]", 'success')
+            flash(f"Successfully Registered User '{f_name} {l_name}' [{id}]", 'success')
             print(f"Successfully Registered User '{f_name} {l_name}' [{id}]")
     return render_template("register-page.html", form=form)
 
@@ -206,6 +196,11 @@ def logout():
         print("Not Logged In")
     return redirect('/login')
 
+
+from views_events import *
+from views_errors import *
+from views_admin import *
+from models import (UserModel, AdminModel, EventsModel)
 
 if __name__ == '__main__':
     app.run()

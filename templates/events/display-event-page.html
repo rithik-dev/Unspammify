@@ -46,8 +46,8 @@
 <!-- displaying interested users name here only if admin is logged in  -->
 {% if 'admin' in session %}
    <div id="user-data-events">
-      <h4><u>Number of Interested Users : <b>{{ num_interested }} / {{ total_users_registered }}</b></u></h4>
       {% if users_interested %}
+         <h4><u>Number of Interested Users : <b>{{ num_interested }} / {{ total_users_registered }}</b></u></h4>
          <br/>
          <table>
             {% for user in users_interested %}
@@ -70,7 +70,7 @@
    <a onclick="displayToggle()" data-toggle="tooltip" title="Interested Users">
       <h2>
          <b>
-            <i class="fa fa-users" style="font-size:35px;padding:5px;color:white"></i>
+            <i class="fa fa-users" style="font-size:35px;padding:5px;color:black"></i>
          </b>
       </h2>
    </a>
@@ -98,9 +98,9 @@
 {% if 'user' in session %}
 
    <a href="/events/add-to-fav/{{event.ID}}" data-toggle="tooltip" title="Add To Favourites">
-      <button>
-         <i class="fa fa-thumbs-up"></i>
-      </button>
+   <button>
+   <i class="fa fa-thumbs-up"></i>
+   </button>
    </a>
 
 {% elif 'admin' in session %}
