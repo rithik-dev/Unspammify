@@ -132,7 +132,7 @@ def modify_event(event_id):
                     changes.append('Description')
 
                 if event_modified:
-                    msg = " ".join([x for x in changes]) + " Changed"
+                    msg = " , ".join([x for x in changes]) + " Changed"
 
                     db.session.commit()
 

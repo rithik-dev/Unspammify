@@ -39,7 +39,7 @@ app.jinja_env.globals.update(get_session=get_session)
 
 
 def sendMail(subject, message, recipients, message_on_true):
-    if recipients:  # there is atleast one interested user
+    if recipients:  # there is at least one interested user
         try:
             with mail.connect() as conn:
                 msg = Message(recipients=recipients,
