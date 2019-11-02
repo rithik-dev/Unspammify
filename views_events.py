@@ -99,13 +99,6 @@ def modify_event(event_id):
                 new_heading = str(form.heading.data).strip()
                 new_description = str(form.description.data).strip()
 
-                # get all favourite users for <event_id>
-                rs = UserModel.query.all()
-                recipients = []
-                for user in rs:
-                    if event_id in user.InterestedActivities:
-                        recipients.append(user.ID + '@bennett.edu.in')
-
                 event_modified = False
                 # list containing titles of all the changes made to the event ... used in subject for mail
                 changes = []
@@ -135,6 +128,13 @@ def modify_event(event_id):
                     msg = " , ".join([x for x in changes]) + " Changed"
 
                     db.session.commit()
+
+                    # get all favourite users for <event_id>
+                    rs = UserModel.query.all()
+                    recipients = []
+                    for user in rs:
+                        if event_id in user.InterestedActivities:
+                            recipients.append(user.ID + '@bennett.edu.in')
 
                     sendMail(f"Event Modified : {event.EventHeading}",
                              get_event_description(event, msg),
@@ -269,6 +269,25 @@ def add_event_to_favourites(event_id):
         return redirect('/login')
 
 
+@app.route(URL_PREFIX + '/remove-from-fav/<string:event_id>')
+def remove_event_from_favourites(event_id):
+    if 'user' in session:
+        rs = UserModel.query.filter_by(ID=session['user']).first()
+        if event_id in rs.InterestedActivities:
+            rs.InterestedActivities = str(rs.InterestedActivities).replace(event_id + ',', '')
+            db.session.commit()
+            flash(f"Event With ID : '{event_id}' Removed From {rs.Name}'s Favourites", 'success')
+            print(f"Event With ID : '{event_id}' Removed From {rs.Name}'s Favourites")
+        else:
+            flash(f"Event With ID : '{event_id}' Not in {rs.Name}'s Favourites", 'danger')
+            print(f"Event With ID : '{event_id}' Not in {rs.Name}'s Favourites")
+        return redirect('/user/' + session['user'])
+    else:
+        flash("User Not Logged In", 'danger')
+        print("User Not Logged In")
+        return redirect('/login')
+
+
 @app.route(URL_PREFIX + '/delete-old-events')
 def delete_old_events():
     if 'admin' in session:
@@ -299,23 +318,4 @@ def delete_old_events():
     else:
         flash("Admin Not Logged In", 'danger')
         print("Admin Not Logged In")
-        return redirect('/login')
-
-
-@app.route(URL_PREFIX + '/remove-from-fav/<string:event_id>')
-def remove_event_from_favourites(event_id):
-    if 'user' in session:
-        rs = UserModel.query.filter_by(ID=session['user']).first()
-        if event_id in rs.InterestedActivities:
-            rs.InterestedActivities = str(rs.InterestedActivities).replace(event_id + ',', '')
-            db.session.commit()
-            flash(f"Event With ID : '{event_id}' Removed From {rs.Name}'s Favourites", 'success')
-            print(f"Event With ID : '{event_id}' Removed From {rs.Name}'s Favourites")
-        else:
-            flash(f"Event With ID : '{event_id}' Not in {rs.Name}'s Favourites", 'danger')
-            print(f"Event With ID : '{event_id}' Not in {rs.Name}'s Favourites")
-        return redirect('/user/' + session['user'])
-    else:
-        flash("User Not Logged In", 'danger')
-        print("User Not Logged In")
         return redirect('/login')
