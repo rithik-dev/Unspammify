@@ -273,6 +273,7 @@ def add_event_to_favourites(event_id):
 def delete_old_events():
     if 'admin' in session:
         current_date = date.today()
+        users = UserModel.query.all()
         events = EventsModel.query.all()
         num_events = 0  # total number of events deleted
         for e in events:
@@ -280,6 +281,12 @@ def delete_old_events():
             if event_date < current_date:
                 num_events += 1
                 db.session.delete(e)
+
+                # deleting event from users interested events
+                for user in users:
+                    if e.ID in user.InterestedActivities:
+                        user.InterestedActivities = user.InterestedActivities.replace(e.ID + ',', '')
+
             db.session.commit()
 
         if num_events:
