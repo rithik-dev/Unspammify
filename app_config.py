@@ -8,5 +8,5 @@ MAIL_USE_TLS = True
 MAIL_USE_SSL = False
 MAIL_USERNAME = 'unspammify@gmail.com'
 MAIL_PASSWORD = 'UN$P@MIFFY_98'
-MAIL_DEFAULT_SENDER = 'help.unspammify@gmail.com'
+MAIL_DEFAULT_SENDER = 'unspammify@gmail.com'
 MAIL_MAX_EMAILS = None
