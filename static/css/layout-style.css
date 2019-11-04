@@ -71,6 +71,10 @@ button {
 	transition: 0.1s;
 }
 
+button:focus,button:active {
+   outline: none;
+}
+
 input[type="button"]:hover {
 	font-weight: bold;
 }
